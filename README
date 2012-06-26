@@ -49,3 +49,6 @@ stores the host and the port where the models is actually being run.
 
 server_config.json: used to specify config options for the load balancer.
 Right now, it just hardcodes a list of servers that can act as children.
+
+test.xml: an outline of what an xml file that comes from the front-end would
+look like
