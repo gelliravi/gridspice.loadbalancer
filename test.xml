@@ -1,0 +1,9 @@
+<Simulation serverPath="[server containing models]">
+    <Files>
+        <File id="[unique]" fileName="[the file name]"> </File>
+    </Files>
+    <Models>
+        <Model id="[unique]" type="[transmission or distribution]">
+        </Model>
+    </Models>
+</Simulation>

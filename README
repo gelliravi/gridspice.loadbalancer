@@ -1,0 +1,51 @@
+--------
+overview
+--------
+We use flask to implement a simple loadbalancer. 
+
+In the current architecture, the front-end app sends requests to one
+production machine running the code from gridspice.webserver 
+(see code.google.com). 
+
+The idea is to have the front-end app send requests to a load-balancing 
+machine (this code). The load balancer, in turn, distributes requests
+among the many machines running the gridspice.webserver code. 
+
+To run, simply type -
+
+$ python2.6 index.py
+
+------------
+dependencies 
+-----------
+
+Must use python2.6
+
+1) easy_install-2.6 elementtree
+2) install flask, a python web framework. 
+
+-----
+Files
+-----
+
+index.py: handles url routing. This is a thin wrapper around calls to
+SimulationManager.py
+
+SimulationManager.py: Defines a class for managing simulations. 
+There are 2 main methods:
+    - start_simulation, which is called to create a new simulation. It takes 
+      the xml file that came with the request, splits it up into files with
+      only one model per request, and forwards the request out to a child
+      server (i.e. the loda balancing part). 
+    - handle_generic_request, which is called to handle any other request. 
+      Looks up which server the simulation with the corresponding
+      simulationId/modelId is being run, and forwards the request out
+We store a mapping of simulations to the server the request is being run on
+on the filesystem. We create a directory called simulations, and then in
+the simulations directory we create a folder for each simulation id. within
+each of these folders, there is a json file named by the model id which
+stores the host and the port where the models is actually being run. 
+
+
+server_config.json: used to specify config options for the load balancer.
+Right now, it just hardcodes a list of servers that can act as children.
